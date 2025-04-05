@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E94B0CE02DA0F17300EF0451 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0CDF2DA0F17300EF0451 /* Kingfisher */; };
+		E94B0D552DA0F80D00EF0451 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0D542DA0F80D00EF0451 /* Nimble */; };
+		E94B0D582DA0F82400EF0451 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0D572DA0F82400EF0451 /* Quick */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94B0D582DA0F82400EF0451 /* Quick in Frameworks */,
+				E94B0D552DA0F80D00EF0451 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +154,8 @@
 			);
 			name = SimpleImageListCombineTests;
 			packageProductDependencies = (
+				E94B0D542DA0F80D00EF0451 /* Nimble */,
+				E94B0D572DA0F82400EF0451 /* Quick */,
 			);
 			productName = SimpleImageListCombineTests;
 			productReference = E9B36A5E2DA0E9AC00129AB5 /* SimpleImageListCombineTests.xctest */;
@@ -213,6 +219,8 @@
 			packageReferences = (
 				E94B0CDD2DA0F15B00EF0451 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E94B0CE12DA0F18D00EF0451 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */,
+				E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9B36A4F2DA0E9A800129AB5 /* Products */;
@@ -599,6 +607,22 @@
 				minimumVersion = 0.58.2;
 			};
 		};
+		E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -611,6 +635,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E94B0CE12DA0F18D00EF0451 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		E94B0D542DA0F80D00EF0451 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		E94B0D572DA0F82400EF0451 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

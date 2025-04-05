@@ -1,5 +1,5 @@
 {
-  "originHash" : "a7ec29eeea83f75cb61e8c4937ec2a17c1d5c5ef92b524d57b7add2790e65a4b",
+  "originHash" : "e3daf3da55601f93c058dbd7a4949eb76f1d7fb598ffb160ca5e45acc9e58d64",
   "pins" : [
     {
       "identity" : "collectionconcurrencykit",
@@ -20,12 +20,48 @@
       }
     },
     {
+      "identity" : "cwlcatchexception",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlCatchException.git",
+      "state" : {
+        "revision" : "07b2ba21d361c223e25e3c1e924288742923f08c",
+        "version" : "2.2.1"
+      }
+    },
+    {
+      "identity" : "cwlpreconditiontesting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattgallagher/CwlPreconditionTesting.git",
+      "state" : {
+        "revision" : "0139c665ebb45e6a9fbdb68aabfd7c39f3fe0071",
+        "version" : "2.2.2"
+      }
+    },
+    {
       "identity" : "kingfisher",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Kingfisher.git",
       "state" : {
         "revision" : "4c6b067f96953ee19526e49e4189403a2be21fb3",
         "version" : "8.3.1"
+      }
+    },
+    {
+      "identity" : "nimble",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Nimble",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ab84b2ff8c2b00bedd437aa25d436dad738ecf8d"
+      }
+    },
+    {
+      "identity" : "quick",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Quick/Quick",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f71cf4dab9eae6ac51256538809b0981fc55c83b"
       }
     },
     {
@@ -38,12 +74,30 @@
       }
     },
     {
+      "identity" : "swift-algorithms",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-algorithms.git",
+      "state" : {
+        "revision" : "87e50f483c54e6efd60e885f7f5aa946cee68023",
+        "version" : "1.2.1"
+      }
+    },
+    {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser.git",
       "state" : {
         "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
         "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-numerics",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-numerics.git",
+      "state" : {
+        "revision" : "e0ec0f5f3af6f3e4d5e7a19d2af26b481acb6ba8",
+        "version" : "1.0.3"
       }
     },
     {
