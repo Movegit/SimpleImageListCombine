@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E94B0CE02DA0F17300EF0451 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0CDF2DA0F17300EF0451 /* Kingfisher */; };
+		E94B0D552DA0F80D00EF0451 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0D542DA0F80D00EF0451 /* Nimble */; };
+		E94B0D582DA0F82400EF0451 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = E94B0D572DA0F82400EF0451 /* Quick */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E9B36A5F2DA0E9AC00129AB5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94B0CE02DA0F17300EF0451 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +66,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94B0D582DA0F82400EF0451 /* Quick in Frameworks */,
+				E94B0D552DA0F80D00EF0451 /* Nimble in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +81,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E94B0CDE2DA0F17300EF0451 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E9B36A452DA0E9A800129AB5 = {
 			isa = PBXGroup;
 			children = (
 				E9B36A502DA0E9A800129AB5 /* SimpleImageListCombine */,
 				E9B36A612DA0E9AC00129AB5 /* SimpleImageListCombineTests */,
 				E9B36A6B2DA0E9AC00129AB5 /* SimpleImageListCombineUITests */,
+				E94B0CDE2DA0F17300EF0451 /* Frameworks */,
 				E9B36A4F2DA0E9A800129AB5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -106,12 +123,14 @@
 			buildRules = (
 			);
 			dependencies = (
+				E94B0CE32DA0F19A00EF0451 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				E9B36A502DA0E9A800129AB5 /* SimpleImageListCombine */,
 			);
 			name = SimpleImageListCombine;
 			packageProductDependencies = (
+				E94B0CDF2DA0F17300EF0451 /* Kingfisher */,
 			);
 			productName = SimpleImageListCombine;
 			productReference = E9B36A4E2DA0E9A800129AB5 /* SimpleImageListCombine.app */;
@@ -135,6 +154,8 @@
 			);
 			name = SimpleImageListCombineTests;
 			packageProductDependencies = (
+				E94B0D542DA0F80D00EF0451 /* Nimble */,
+				E94B0D572DA0F82400EF0451 /* Quick */,
 			);
 			productName = SimpleImageListCombineTests;
 			productReference = E9B36A5E2DA0E9AC00129AB5 /* SimpleImageListCombineTests.xctest */;
@@ -195,6 +216,12 @@
 			);
 			mainGroup = E9B36A452DA0E9A800129AB5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				E94B0CDD2DA0F15B00EF0451 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				E94B0CE12DA0F18D00EF0451 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */,
+				E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E9B36A4F2DA0E9A800129AB5 /* Products */;
 			projectDirPath = "";
@@ -256,6 +283,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E94B0CE32DA0F19A00EF0451 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = E94B0CE22DA0F19A00EF0451 /* SwiftLintBuildToolPlugin */;
+		};
 		E9B36A602DA0E9AC00129AB5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E9B36A4D2DA0E9A800129AB5 /* SimpleImageListCombine */;
@@ -558,6 +589,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E94B0CDD2DA0F15B00EF0451 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.3.1;
+			};
+		};
+		E94B0CE12DA0F18D00EF0451 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.58.2;
+			};
+		};
+		E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Nimble";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Quick/Quick";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E94B0CDF2DA0F17300EF0451 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0CDD2DA0F15B00EF0451 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		E94B0CE22DA0F19A00EF0451 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0CE12DA0F18D00EF0451 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		E94B0D542DA0F80D00EF0451 /* Nimble */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0D532DA0F80D00EF0451 /* XCRemoteSwiftPackageReference "Nimble" */;
+			productName = Nimble;
+		};
+		E94B0D572DA0F82400EF0451 /* Quick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E94B0D562DA0F82400EF0451 /* XCRemoteSwiftPackageReference "Quick" */;
+			productName = Quick;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E9B36A462DA0E9A800129AB5 /* Project object */;
 }
