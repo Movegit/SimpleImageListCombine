@@ -34,9 +34,7 @@ struct MainView: View {
                             .listRowSeparator(.hidden)
                             .onAppear {
                                 if shouldLoadMoreData(for: item) {
-                                    Task {
-                                        await viewModel.loadData(initialize: false)
-                                    }
+                                    viewModel.triggerLoadMore()
                                 }
                             }
                         }
