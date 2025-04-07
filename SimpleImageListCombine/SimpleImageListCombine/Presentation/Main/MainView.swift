@@ -58,7 +58,7 @@ struct MainView: View {
             }
             .onAppear {
                 Task {
-                    await viewModel.loadData(initialize: true)
+                    await viewModel.loadData(initialize: viewModel.picList.isEmpty)
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())
