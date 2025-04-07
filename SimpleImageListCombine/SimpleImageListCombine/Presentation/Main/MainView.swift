@@ -20,8 +20,8 @@ struct MainView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color(UIColor.white))
 
-                List {
-                    Section {
+                ScrollView {
+                    LazyVStack(spacing: 0) {
                         ForEach(viewModel.picList, id: \.id) { item in
                             NavigationLink(destination: DetailImageView(imageId: item.id)) {
                                 MainImageCell(item: item)
@@ -34,31 +34,26 @@ struct MainView: View {
                             .listRowSeparator(.hidden)
                             .onAppear {
                                 if shouldLoadMoreData(for: item) {
-                                    Task {
-                                        await viewModel.loadData(initialize: false)
-                                    }
+                                    viewModel.triggerLoadMore()
                                 }
                             }
                         }
-                    }
-                    .listRowInsets(EdgeInsets())
-                    .background(Color(UIColor.white))
 
-                    if viewModel.picList.isEmpty {
-                        Section {
+                        if viewModel.picList.isEmpty {
                             EmptyImageCell()
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .listRowInsets(EdgeInsets())
-
-                        }.background(Color(UIColor.white))
+                        }
                     }
                 }
-                .listStyle(PlainListStyle())
+                .refreshable {
+                    await viewModel.loadData(initialize: true)
+                }
                 .background(Color(UIColor.white))
             }
             .onAppear {
                 Task {
-                    await viewModel.loadData(initialize: true)
+                    await viewModel.loadData(initialize: viewModel.picList.isEmpty)
                 }
             }
             .navigationViewStyle(StackNavigationViewStyle())
