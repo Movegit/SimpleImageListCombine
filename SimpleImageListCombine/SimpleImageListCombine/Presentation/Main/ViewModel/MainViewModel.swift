@@ -10,6 +10,7 @@ import Combine
 
 protocol MainViewListType: ObservableObject {
     func loadData(initialize: Bool) async
+    func triggerLoadMore()
     var picList: [PicSumItem] { get }
     var isLoadingData: Bool { get }
     var hasNext: Bool { get }
@@ -25,11 +26,13 @@ class MainViewModel: MainViewListType {
     private let service: PicSumImageServiceProtocol
     private var currentPage: Int = 1
     private var pageSize: Int = 30
+    private let loadMoreSubject = PassthroughSubject<Void, Never>()
     private var cancelables = Set<AnyCancellable>()
 
     init(service: PicSumImageServiceProtocol = PicSumImageService(), defaultPageSize: Int = 30) {
         self.service = service
         self.pageSize = defaultPageSize
+        self.setupLoadMoreListener()
     }
 
     @MainActor
@@ -72,5 +75,23 @@ class MainViewModel: MainViewListType {
                     self.currentPage += 1
                 }
             }.store(in: &cancelables)
+    }
+
+    private func setupLoadMoreListener() {
+        loadMoreSubject
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                if self.hasNext && !self.isLoadingData {
+                    Task {
+                        await self.loadData(initialize: false)
+                    }
+                }
+            }
+            .store(in: &cancelables)
+    }
+
+    func triggerLoadMore() {
+        loadMoreSubject.send(())
     }
 }
