@@ -7,12 +7,28 @@
 import Foundation
 import Combine
 
-enum APIError: Error {
+enum APIError: Error, Equatable {
     case invalidURL
     case noData
     case decodingFailed
     case networkError(Error)
     case invalidStatusCode(Int)
+
+    static func == (lhs: APIError, rhs: APIError) -> Bool {
+        switch (lhs, rhs) {
+        case (.invalidURL, .invalidURL),
+            (.noData, .noData),
+            (.decodingFailed, .decodingFailed):
+            return true
+        case (.networkError(let lhsError), .networkError(let rhsError)):
+            return (lhsError as NSError).domain == (rhsError as NSError).domain &&
+            (lhsError as NSError).code == (rhsError as NSError).code
+        case (.invalidStatusCode(let lhsCode), .invalidStatusCode(let rhsCode)):
+            return lhsCode == rhsCode
+        default:
+            return false
+        }
+    }
 }
 
 class APIHelperCombine {
@@ -30,19 +46,27 @@ class APIHelperCombine {
         body: [String: Any]? = nil,
         headers: [String: Any]? = nil
     ) -> AnyPublisher<T, APIError> {
-        var urlComponents = URLComponents(string: url)
+        guard let components = URLComponents(string: url),
+              let url = components.url,
+              let scheme = components.scheme,
+              !scheme.isEmpty,
+              let host = components.host,
+              !host.isEmpty else {
+            return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
+        }
 
+        var urlComponents = components
         if method == .get, let queryParameters = queryParameters {
-            urlComponents?.queryItems = queryParameters.map {
+            urlComponents.queryItems = queryParameters.map {
                 URLQueryItem(name: $0.key, value: "\($0.value)")
             }
         }
 
-        guard let url = urlComponents?.url else {
+        guard let finalURL = urlComponents.url else {
             return Fail(error: APIError.invalidURL).eraseToAnyPublisher()
         }
 
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: finalURL)
         request.httpMethod = method.rawValue
 
         headers?.forEach { key, value in
