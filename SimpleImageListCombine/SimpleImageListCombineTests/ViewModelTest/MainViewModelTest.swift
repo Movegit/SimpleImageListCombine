@@ -6,40 +6,41 @@
 //
 
 import Foundation
-import XCTest
 import Combine
+import Quick
+import Nimble
 @testable import SimpleImageListCombine
 
 @MainActor
-final class MainViewModelTest: XCTestCase {
-    private let timeout: TimeInterval = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] != nil ? 10 : 5
-    private var viewModel: MainViewModel?
-    private var cancelables: Set<AnyCancellable> = []
+final class MainViewModelTest: QuickSpec {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        viewModel = MainViewModel()
-    }
+    override class func spec() {
+        var viewModel: MainViewModel?
+        var cancelables: Set<AnyCancellable> = []
 
-    override func tearDownWithError() throws {
-        viewModel = nil
-        cancelables.removeAll()
-        try super.tearDownWithError()
-    }
+        beforeEach {
+            viewModel = MainViewModel()
+        }
 
-    func testDetailImageSuccess() async throws {
-        let expectation = XCTestExpectation(description: "Load get List")
+        afterEach {
+            viewModel = nil
+            cancelables.removeAll()
+        }
 
-        await viewModel?.loadData(initialize: true)
+        context("Load get List") {
+            describe("load data 후 체크") {
+                it("picList가 비어있으면 안됌") {
+                    Task {
+                        await viewModel?.loadData(initialize: true)
 
-        viewModel?.$picList
-            .dropFirst()
-            .sink { list in
-                XCTAssertNotEqual(list.isEmpty, true, "picList가 비어있음")
-
-                expectation.fulfill()
-            }.store(in: &cancelables)
-
-        await fulfillment(of: [expectation], timeout: timeout)
+                        viewModel?.$picList
+                            .dropFirst()
+                            .sink { list in
+                                expect(list.isEmpty).toNot(beFalse(), description: "picList가 비어있음")
+                            }.store(in: &cancelables)
+                    }
+                }
+            }
+        }
     }
 }
