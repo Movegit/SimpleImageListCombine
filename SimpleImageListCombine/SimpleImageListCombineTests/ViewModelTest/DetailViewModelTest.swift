@@ -6,40 +6,42 @@
 //
 
 import Foundation
-import XCTest
+import Quick
+import Nimble
 import Combine
 @testable import SimpleImageListCombine
 
 @MainActor
-final class DetailViewModelTest: XCTestCase {
-    let timeout: TimeInterval = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] != nil ? 10 : 5
-    private var viewModel: DetailViewModel?
-    private var cancelables: Set<AnyCancellable> = []
+final class DetailViewModelTest: QuickSpec {
 
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-        viewModel = DetailViewModel()
-    }
+    override class func spec() {
+        var viewModel: DetailViewModel?
+        var cancelables: Set<AnyCancellable> = []
 
-    override func tearDownWithError() throws {
-        viewModel = nil
-        cancelables.removeAll()
-        try super.tearDownWithError()
-    }
+        beforeEach {
+            viewModel = DetailViewModel()
+        }
 
-    func testDetailImageSuccess() async throws {
-        let expectation = XCTestExpectation(description: "Load detail")
-        await viewModel?.loadDetail(imageId: "1")
+        afterEach {
+            viewModel = nil
+            cancelables.removeAll()
+        }
 
-        viewModel?.$detailModel
-            .dropFirst()
-            .sink { model in
-                XCTAssertEqual(model?.id, "1", "detail id is 1")
-                XCTAssertNotEqual(model?.id, "0", "detail id is 1")
+        context("Load detail") {
+            describe("load detail 후 체크") {
+                it("1이어야함") {
+                    Task {
+                        await viewModel?.loadDetail(imageId: "1")
 
-                expectation.fulfill()
-            }.store(in: &cancelables)
-
-        await fulfillment(of: [expectation], timeout: timeout)
+                        viewModel?.$detailModel
+                            .dropFirst()
+                            .sink { model in
+                                expect(model?.id).to(equal("1"), description: "detail id is 1")
+                                expect(model?.id).notTo(equal("0"), description: "detail id is 1")
+                            }.store(in: &cancelables)
+                    }
+                }
+            }
+        }
     }
 }
