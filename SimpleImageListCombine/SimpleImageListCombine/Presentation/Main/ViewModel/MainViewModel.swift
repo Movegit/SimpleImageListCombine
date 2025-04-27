@@ -18,10 +18,11 @@ protocol MainViewListType: ObservableObject {
 
 class MainViewModel: MainViewListType {
 
-    @Published var picList: [PicSumItem] = []
-    @Published var isLoadingData: Bool = false
-    @Published var hasNext: Bool = true
-    @Published var error: APIError?
+    @Published private(set) var picList: [PicSumItem] = []
+    @Published private(set) var isLoadingData: Bool = false
+    @Published private(set) var hasNext: Bool = true
+    @Published private(set) var error: APIError?
+    @Published private(set) var showErrorAlert: Bool = false
 
     private let service: PicSumImageServiceProtocol
     private var currentPage: Int = 1
@@ -29,15 +30,18 @@ class MainViewModel: MainViewListType {
     private let loadMoreSubject = PassthroughSubject<Void, Never>()
     private var cancelables = Set<AnyCancellable>()
 
-    init(service: PicSumImageServiceProtocol = PicSumImageService(), defaultPageSize: Int = 30) {
+    init(service: PicSumImageServiceProtocol, pageSize: Int = 30) {
         self.service = service
-        self.pageSize = defaultPageSize
+        self.pageSize = pageSize
         self.setupLoadMoreListener()
+    }
+
+    deinit {
+        cancelAllSubscriptions()
     }
 
     @MainActor
     func loadData(initialize: Bool) async {
-
         if initialize {
             hasNext = true
             currentPage = 1
@@ -48,13 +52,19 @@ class MainViewModel: MainViewListType {
             return
         }
 
+        isLoadingData = true
         error = nil
+        showErrorAlert = false
 
         service.getImages(page: currentPage, limit: pageSize)
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
+                guard let self else { return }
+                self.isLoadingData = false
+                
                 if case .failure(let error) = completion {
                     self.error = error
+                    self.showErrorAlert = true
                 }
             } receiveValue: { [weak self] result in
                 guard let self else { return }
@@ -93,5 +103,15 @@ class MainViewModel: MainViewListType {
 
     func triggerLoadMore() {
         loadMoreSubject.send(())
+    }
+
+    func retryLoading() {
+        Task {
+            await loadData(initialize: false)
+        }
+    }
+
+    private func cancelAllSubscriptions() {
+        cancelables.removeAll()
     }
 }

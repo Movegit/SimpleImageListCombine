@@ -12,26 +12,28 @@ import Combine
 @testable import SimpleImageListCombine
 
 @MainActor
-final class MainViewModelSpec: QuickSpec {
+final class MainViewModelNimbleTest: QuickSpec {
     override class func spec() {
         var viewModel: MainViewModel?
         var cancelables: Set<AnyCancellable> = []
-        let timeout: Int = ProcessInfo.processInfo.environment["SIMULATOR_DEVICE_NAME"] != nil ? 10 : 5
+        var mockService: MockPicSumImageService?
 
         beforeEach {
-            viewModel = MainViewModel()
+            mockService = MockPicSumImageService()
+            viewModel = MainViewModel(service: mockService!)
             cancelables = []
         }
 
         afterEach {
             viewModel = nil
+            mockService = nil
             cancelables.removeAll()
         }
 
         describe("MainViewModel 데이터 로딩") {
             context("초기화 후 첫 로드 시") {
                 it("에러 상태가 nil이어야 함") {
-                    waitUntil(timeout: .seconds(timeout)) { done in
+                    waitUntil(timeout: .seconds(5)) { done in
                         viewModel?.$error
                             .dropFirst()
                             .sink { error in
@@ -48,7 +50,7 @@ final class MainViewModelSpec: QuickSpec {
 
             context("연속 로드 시") {
                 it("페이지네이션이 정상 작동해야 함") {
-                    waitUntil(timeout: .seconds(timeout)) { done in
+                    waitUntil(timeout: .seconds(5)) { done in
                         Task {
                             // 첫 페이지 로드
                             await viewModel?.loadData(initialize: true)
