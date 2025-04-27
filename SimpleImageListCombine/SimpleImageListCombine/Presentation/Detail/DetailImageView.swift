@@ -11,8 +11,14 @@ import Kingfisher
 
 struct DetailImageView: View {
     @Environment(\.presentationMode) var presentationMode
-    @StateObject private var viewModel = DetailViewModel()
+    @StateObject private var viewModel: DetailViewModel
     let imageId: String
+
+    init(imageId: String) {
+        let service = PicSumImageService()
+        _viewModel = StateObject(wrappedValue: DetailViewModel(service: service))
+        self.imageId = imageId
+    }
 
     var body: some View {
         VStack(spacing: 0) {

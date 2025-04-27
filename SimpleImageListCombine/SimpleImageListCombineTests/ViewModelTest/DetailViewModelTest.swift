@@ -17,13 +17,16 @@ final class DetailViewModelTest: QuickSpec {
     override class func spec() {
         var viewModel: DetailViewModel?
         var cancelables: Set<AnyCancellable> = []
+        var mockService: MockPicSumImageService?
 
         beforeEach {
-            viewModel = DetailViewModel()
+            mockService = MockPicSumImageService()
+            viewModel = DetailViewModel(service: mockService!)
         }
 
         afterEach {
             viewModel = nil
+            mockService = nil
             cancelables.removeAll()
         }
 
