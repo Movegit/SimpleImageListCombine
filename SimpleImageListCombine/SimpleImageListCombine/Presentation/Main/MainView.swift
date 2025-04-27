@@ -9,7 +9,12 @@ import Foundation
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = MainViewModel()
+    @StateObject private var viewModel: MainViewModel
+
+    init() {
+        let service = PicSumImageService()
+        _viewModel = StateObject(wrappedValue: MainViewModel(service: service))
+    }
 
     var body: some View {
         NavigationView {

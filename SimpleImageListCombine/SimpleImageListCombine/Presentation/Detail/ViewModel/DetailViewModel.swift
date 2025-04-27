@@ -15,24 +15,32 @@ protocol DetailViewListType: ObservableObject {
 
 class DetailViewModel: DetailViewListType {
     private let service: PicSumImageServiceProtocol
-    @Published var detailModel: PicSumItem?
-    @Published var error: APIError?
+    @Published private(set) var detailModel: PicSumItem?
+    @Published private(set) var error: APIError?
+    @Published private(set) var showErrorAlert: Bool = false
 
     private var cancelables = Set<AnyCancellable>()
 
-    init(service: PicSumImageServiceProtocol = PicSumImageService()) {
+    init(service: PicSumImageServiceProtocol) {
         self.service = service
+    }
+
+    deinit {
+        cancelAllSubscriptions()
     }
 
     @MainActor
     func loadDetail(imageId: String) async {
         error = nil
+        showErrorAlert = false
 
         service.detailImage(imageId: imageId)
             .receive(on: DispatchQueue.main)
-            .sink { completion in
+            .sink { [weak self] completion in
+                guard let self else { return }
                 if case .failure(let error) = completion {
                     self.error = error
+                    self.showErrorAlert = true
                 }
             } receiveValue: { [weak self] image in
                 guard let self else { return }
@@ -57,6 +65,10 @@ class DetailViewModel: DetailViewListType {
             url: \(model.url)
             downloadUrl: \(model.downloadUrl)
             """
+    }
+
+    private func cancelAllSubscriptions() {
+        cancelables.removeAll()
     }
 }
 
