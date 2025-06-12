@@ -1,6 +1,8 @@
 included:
-  - Sources
+  - SimpleImageListCombine/SimpleImageListCombine
 excluded:
+  - SimpleImageListCombine/SimpleImageListCombineTests
+  - SimpleImageListCombine/SimpleImageListCombineUITests
   - Pods
 
 disabled_rules:
