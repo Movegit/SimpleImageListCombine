@@ -1,0 +1,43 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-test:
+    name: Build and Test
+    runs-on: macos-14  # darwin 24.x는 macOS Sonoma(14)와 일치
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 'latest-stable'
+      - name: Install SwiftLint
+        run: brew install swiftlint
+      - name: Run SwiftLint
+        run: swiftlint --config "${GITHUB_WORKSPACE}/SimpleImageListCombine/.swiftlint.yml"
+      - name: Build
+        run: |
+          xcodebuild clean build \
+            -project SimpleImageListCombine/SimpleImageListCombine.xcodeproj \
+            -scheme SimpleImageListCombine \
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Test
+        run: |
+          xcodebuild test \
+            -project SimpleImageListCombine/SimpleImageListCombine.xcodeproj \
+            -scheme SimpleImageListCombine \
+            -destination "platform=iOS Simulator,name=iPhone 15,OS=17.2" \
+            -only-testing:SimpleImageListCombineTests \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
