@@ -1,7 +1,9 @@
 included:
-  - Sources
+  - ../SimpleImageListCombine/SimpleImageListCombine
 excluded:
-  - Pods
+  - ../SimpleImageListCombine/SimpleImageListCombineTests
+  - ../SimpleImageListCombine/SimpleImageListCombineUITests
+  - ../Pods
 
 disabled_rules:
   - force_cast
@@ -26,6 +28,3 @@ file_length:
 
 todo:
   severity: warning
-  included: ".*.swift"
-  match_kinds:
-    - comment
